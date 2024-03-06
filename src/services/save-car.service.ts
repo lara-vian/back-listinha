@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { ICar } from "../@types/interfaces";
 
 export function saveParent(data: ICar[]) {
   try {

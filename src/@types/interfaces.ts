@@ -1,11 +1,11 @@
-interface IMarket {
+export interface IMarket {
   id: number;
   name: string;
   quantity: number;
 }
 
 
-interface ICar {
+export interface ICar {
   id: number;
   name: string;
   quantity: number;

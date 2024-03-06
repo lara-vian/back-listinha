@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { IMarket } from "../@types/interfaces";
 
 export function saveParent(data: IMarket[]) {
   try {
