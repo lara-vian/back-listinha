@@ -5,6 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "test": "jest --watchAll",
+    "build": "nodemon lib/index.js --exec babel-node --presets=es2015,stage-2",
     "start": "nodemon src/server.ts"
   },
   "keywords": [],
