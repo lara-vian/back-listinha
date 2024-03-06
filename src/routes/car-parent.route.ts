@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import { check, validationResult } from "express-validator";
 import car from "../data/car/data-parent.json";
-import { saveParent } from "../services/save-market.service";
+import { saveParent } from "../services/save-car.service";
 const carRouter = Router();
 
 carRouter.get(

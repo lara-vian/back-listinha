@@ -4,6 +4,8 @@ import market from "../data/market/data-parent.json";
 import { saveParent} from "../services/save-market.service";
 const marketRouter = Router();
 
+
+
 marketRouter.get(
   "/market-parent",
   (req: express.Request, res: express.Response) => {
@@ -24,7 +26,7 @@ marketRouter.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, quantity } = req.body;
+    const { name, quantity }: { name: string; quantity: number } = req.body;
     const id = market.length + 1;
 
     market.push({ id, name, quantity });
