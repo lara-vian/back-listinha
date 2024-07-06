@@ -13,22 +13,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Item {
-  id          String         @id @default(dbgenerated("gen_random_uuid()"))
-  name        String         @unique
-  category    Category @relation(fields: [category_id], references: [id])
-  category_id String
-  description String
-
-  @@map("market_item")
-}
-
-model Category {
+model MarketCategory {
   id          String       @id @default(dbgenerated("gen_random_uuid()"))
   name        String       @unique
   description String
-  MarketItem  Item[]
+  MarketItem  MarketItem[]
 
   @@map("market_category")
 }
 
+model MarketBrand {
+  id          String @id @default(dbgenerated("gen_random_uuid()"))
+  name        String @unique
+  description String
+
+  @@map("market_brand")
+}
+
+model MarketBusiness {
+  id        String      @id @default(dbgenerated("gen_random_uuid()"))
+  name      String      @unique
+  score     Int
+  MarketCar MarketCar[]
+
+  @@map("market_business")
+}
+
+model MarketItem {
+  id          String  @id @default(dbgenerated("gen_random_uuid()"))
+  name        String  @unique
+  description String
+  unitary     Boolean
+
+  category           MarketCategory       @relation(fields: [category_id], references: [id])
+  category_id        String
+  MarketItemPlanning MarketItemPlanning[]
+
+  @@map("market_item")
+}
+
+model MarketPlanning {
+  id            String   @id @default(dbgenerated("gen_random_uuid()"))
+  created_data  DateTime
+  amount_target Float
+
+  MarketItemPlanning MarketItemPlanning[]
+  MarketCar          MarketCar?
+
+  @@map("market_planning")
+}
+
+model MarketItemPlanning {
+  id       String  @id @default(dbgenerated("gen_random_uuid()"))
+  quantity Int
+  required Boolean
+
+  planning_id   String
+  planning      MarketPlanning  @relation(fields: [planning_id], references: [id])
+  item_id       String
+  item          MarketItem      @relation(fields: [item_id], references: [id])
+  MarketCarItem MarketCarItem[]
+
+  @@map("market_item_planning")
+}
+
+model MarketCar {
+  id              String @id @default(dbgenerated("gen_random_uuid()"))
+  withdrawals     Int
+  not_founds      Int
+  confirmed_value Float
+  estimated_value Float
+
+  planning_id String         @unique
+  planning    MarketPlanning @relation(fields: [planning_id], references: [id])
+
+  business_id   String
+  business      MarketBusiness  @relation(fields: [business_id], references: [id])
+  MarketCarItem MarketCarItem[]
+
+  @@map("market_car")
+}
+
+model MarketCarItem {
+  id       String             @id @default(dbgenerated("gen_random_uuid()"))
+  quantity Int
+  price    Float
+  car_id   String
+  car      MarketCar          @relation(fields: [car_id], references: [id])
+  item_id  String
+  item     MarketItemPlanning @relation(fields: [item_id], references: [id])
+
+  @@map("market_item_car")
+}

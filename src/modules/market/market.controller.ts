@@ -11,7 +11,7 @@ export class MarketController {
   }
 
   @Post()
-  async addItem(@Body() data: Prisma.ItemCreateInput) {
+  async addItem(@Body() data: Prisma.MarketItemCreateInput) {
     return await this.marketService.addItem(data);
   }
 }
