@@ -1,17 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { MarketService } from './market.service';
-import { Prisma } from '@prisma/client';
 
 @Controller('market')
 export class MarketController {
   constructor(private readonly marketService: MarketService) {}
-  @Get()
-  async showPlanning() {
-    return await this.marketService.showPlanning();
-  }
 
-  @Post()
-  async addItem(@Body() data: Prisma.MarketItemCreateInput) {
-    return await this.marketService.addItem(data);
+  @Get('planning/:id')
+  async showPlanning(@Param() params) {
+    const { id } = params;
+    return await this.marketService.showPlanning(id);
   }
 }
